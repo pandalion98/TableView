@@ -20,13 +20,13 @@ package com.evrencoskun.tableview.handler;
 import android.util.Log;
 import android.util.SparseArray;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.evrencoskun.tableview.ITableView;
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * Created by evrencoskun on 24.12.2017.
@@ -108,6 +108,35 @@ public class VisibilityHandler {
             mTableView.getAdapter().removeColumn(viewColumn);
         } else {
             Log.e(LOG_TAG, "This column is already hidden.");
+        }
+    }
+
+    public void hideMultipleColumns(int[] columns) {
+        // Create a temporary cache of columns to be hidden, since convertIndexToViewIndex()
+        // misbehaves for some reason when calling hideColumn() consecutively.
+        //
+        // Consequently, some entries in mHideColumnList are null, when it should not be.
+        //
+        // Causes CellRecyclerViewAdapter.getColumnItems(int columnPosition) to fail
+        //              if (rowList.size() > columnPosition)
+        // TODO: Investigate
+        SparseArray<Column> mHideColumnListTemp = new SparseArray<>();
+        for (int column : columns) {
+            int viewColumn = convertIndexToViewIndex(column, mHideColumnList);
+            if (mHideColumnList.get(column) == null) {
+                mHideColumnListTemp.put(column, getColumnValueFromPosition(viewColumn));
+            }
+        }
+
+        for (int column : columns) {
+            hideColumn(column);
+        }
+
+        // Inevitably, some elements become null. Add them back in. #Band-Aid
+        for (int i = 0; i < mHideColumnListTemp.size(); i++) {
+            if (mHideColumnListTemp.valueAt(i) != null) {
+                mHideColumnList.put(mHideColumnListTemp.keyAt(i), mHideColumnListTemp.valueAt(i));
+            }
         }
     }
 
