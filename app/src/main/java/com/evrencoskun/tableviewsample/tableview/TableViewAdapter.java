@@ -28,8 +28,6 @@ import com.evrencoskun.tableview.sort.SortState;
 import com.evrencoskun.tableviewsample.R;
 import com.evrencoskun.tableviewsample.tableview.holder.CellViewHolder;
 import com.evrencoskun.tableviewsample.tableview.holder.ColumnHeaderViewHolder;
-import com.evrencoskun.tableviewsample.tableview.holder.GenderCellViewHolder;
-import com.evrencoskun.tableviewsample.tableview.holder.MoodCellViewHolder;
 import com.evrencoskun.tableviewsample.tableview.holder.RowHeaderViewHolder;
 import com.evrencoskun.tableviewsample.tableview.model.Cell;
 import com.evrencoskun.tableviewsample.tableview.model.ColumnHeader;
@@ -76,26 +74,11 @@ public class TableViewAdapter extends AbstractTableAdapter<ColumnHeader, RowHead
         //TODO check
         Log.e(LOG_TAG, " onCreateCellViewHolder has been called");
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View layout;
+        View layout = inflater.inflate(R.layout.table_view_cell_layout, parent, false);
 
-        switch (viewType) {
-            case MOOD_CELL_TYPE:
-                // Get image cell layout which has ImageView on the base instead of TextView.
-                layout = inflater.inflate(R.layout.table_view_image_cell_layout, parent, false);
+        // Create a Cell ViewHolder
+        return new CellViewHolder(layout);
 
-                return new MoodCellViewHolder(layout);
-            case GENDER_CELL_TYPE:
-                // Get image cell layout which has ImageView instead of TextView.
-                layout = inflater.inflate(R.layout.table_view_image_cell_layout, parent, false);
-
-                return new GenderCellViewHolder(layout);
-            default:
-                // For cells that display a text
-                layout = inflater.inflate(R.layout.table_view_cell_layout, parent, false);
-
-                // Create a Cell ViewHolder
-                return new CellViewHolder(layout);
-        }
     }
 
     /**
@@ -116,25 +99,9 @@ public class TableViewAdapter extends AbstractTableAdapter<ColumnHeader, RowHead
     public void onBindCellViewHolder(@NonNull AbstractViewHolder holder, @Nullable Cell cellItemModel, int
             columnPosition, int rowPosition) {
 
-        switch (holder.getItemViewType()) {
-            case MOOD_CELL_TYPE:
-                MoodCellViewHolder moodViewHolder = (MoodCellViewHolder) holder;
-
-                moodViewHolder.cell_image.setImageResource(mTableViewModel.getDrawable((int) cellItemModel
-                        .getData(), false));
-                break;
-            case GENDER_CELL_TYPE:
-                GenderCellViewHolder genderViewHolder = (GenderCellViewHolder) holder;
-
-                genderViewHolder.cell_image.setImageResource(mTableViewModel.getDrawable((int)
-                        cellItemModel.getData(), true));
-                break;
-            default:
-                // Get the holder to update cell item text
-                CellViewHolder viewHolder = (CellViewHolder) holder;
-                viewHolder.setCell(cellItemModel);
-                break;
-        }
+        // Get the holder to update cell item text
+        CellViewHolder viewHolder = (CellViewHolder) holder;
+        viewHolder.setCell(cellItemModel);
     }
 
     /**
@@ -265,19 +232,6 @@ public class TableViewAdapter extends AbstractTableAdapter<ColumnHeader, RowHead
 
     @Override
     public int getCellItemViewType(int column) {
-
-        // The unique ID for this type of cell item
-        // If you have different items for Cell View by X (Column) position,
-        // then you should fill this method to be able create different
-        // type of CellViewHolder on "onCreateCellViewHolder"
-        switch (column) {
-            case TableViewModel.MOOD_COLUMN_INDEX:
-                return MOOD_CELL_TYPE;
-            case TableViewModel.GENDER_COLUMN_INDEX:
-                return GENDER_CELL_TYPE;
-            default:
-                // Default view type
-                return 0;
-        }
+        return 0;
     }
 }

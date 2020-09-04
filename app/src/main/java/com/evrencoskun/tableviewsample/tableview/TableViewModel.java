@@ -35,36 +35,11 @@ import java.util.Random;
 
 public class TableViewModel {
 
-    // Columns indexes
-    public static final int MOOD_COLUMN_INDEX = 3;
-    public static final int GENDER_COLUMN_INDEX = 4;
-
-    // Constant values for icons
-    public static final int SAD = 1;
-    public static final int HAPPY = 2;
-    public static final int BOY = 1;
-    public static final int GIRL = 2;
-
     // Constant size for dummy data sets
-    private static final int COLUMN_SIZE = 500;
-    private static final int ROW_SIZE = 500;
-
-    // Drawables
-    @DrawableRes
-    private final int mBoyDrawable;
-    @DrawableRes
-    private final int mGirlDrawable;
-    @DrawableRes
-    private final int mHappyDrawable;
-    @DrawableRes
-    private final int mSadDrawable;
+    private static final int COLUMN_SIZE = 15;
+    private static final int ROW_SIZE = 15;
 
     public TableViewModel() {
-        // initialize drawables
-        mBoyDrawable = R.drawable.ic_male;
-        mGirlDrawable = R.drawable.ic_female;
-        mHappyDrawable = R.drawable.ic_happy;
-        mSadDrawable = R.drawable.ic_sad;
     }
 
     @NonNull
@@ -115,40 +90,18 @@ public class TableViewModel {
                     text = i;
                 } else if (j == 1) {
                     text = random;
-                } else if (j == MOOD_COLUMN_INDEX) {
-                    text = random % 2 == 0 ? HAPPY : SAD;
-                } else if (j == GENDER_COLUMN_INDEX) {
-                    text = random % 2 == 0 ? BOY : GIRL;
                 }
 
                 // Create dummy id.
                 String id = j + "-" + i;
 
-                Cell cell;
-                if (j == 3) {
-                    cell = new Cell(id, text);
-                } else if (j == 4) {
-                    // NOTE female and male keywords for filter will have conflict since "female"
-                    // contains "male"
-                    cell = new Cell(id, text);
-                } else {
-                    cell = new Cell(id, text);
-                }
+                Cell cell = new Cell(id, text);
                 cellList.add(cell);
             }
             list.add(cellList);
         }
 
         return list;
-    }
-
-    @DrawableRes
-    public int getDrawable(int value, boolean isGender) {
-        if (isGender) {
-            return value == BOY ? mBoyDrawable : mGirlDrawable;
-        } else {
-            return value == SAD ? mSadDrawable : mHappyDrawable;
-        }
     }
 
     @NonNull
