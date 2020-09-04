@@ -17,10 +17,8 @@
 
 package com.evrencoskun.tableviewsample.tableview;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
-import com.evrencoskun.tableviewsample.R;
 import com.evrencoskun.tableviewsample.tableview.model.Cell;
 import com.evrencoskun.tableviewsample.tableview.model.ColumnHeader;
 import com.evrencoskun.tableviewsample.tableview.model.RowHeader;
@@ -84,13 +82,6 @@ public class TableViewModel {
             List<Cell> cellList = new ArrayList<>();
             for (int j = 0; j < COLUMN_SIZE; j++) {
                 Object text = "cell " + j + " " + i;
-
-                final int random = new Random().nextInt();
-                if (j == 0) {
-                    text = i;
-                } else if (j == 1) {
-                    text = random;
-                }
 
                 // Create dummy id.
                 String id = j + "-" + i;

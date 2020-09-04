@@ -200,7 +200,13 @@ public class VisibilityHandler {
      * when we add or remove any item of RecyclerView, we need to view index.
      */
     private <T> int convertIndexToViewIndex(int index, SparseArray<T> list) {
-        return index - getSmallerHiddenCount(index, list);
+        int smallerHidden = getSmallerHiddenCount(index, list);
+
+        if (index <= smallerHidden) {
+            return index;
+        }
+
+        return index - smallerHidden;
     }
 
     static class Row {
