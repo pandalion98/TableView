@@ -100,7 +100,7 @@ public class RowHeaderLongPressPopup extends PopupMenu implements PopupMenu
 
                 break;
             case REMOVE_ROW:
-                mTableView.hideColumn(1);
+                mTableView.hideColumn(9);
                 //mTableView.hideColumn(1);
                 break;
         }
