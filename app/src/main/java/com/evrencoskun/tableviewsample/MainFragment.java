@@ -155,13 +155,13 @@ public class MainFragment extends Fragment {
     public void filterTableForMood(@NonNull String filter) {
         // Sets a filter to the table, this will only filter a specific column.
         // In the example data, this will filter the mood column.
-
+        mTableFilter.set(TableViewModel.MOOD_COLUMN_INDEX, filter);
     }
 
     public void filterTableForGender(@NonNull String filter) {
         // Sets a filter to the table, this will only filter a specific column.
         // In the example data, this will filter the gender column.
-
+        mTableFilter.set(TableViewModel.GENDER_COLUMN_INDEX, filter);
     }
 
     // The following four methods below: nextTablePage(), previousTablePage(),
