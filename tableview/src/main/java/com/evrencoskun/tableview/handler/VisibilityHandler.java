@@ -20,13 +20,13 @@ package com.evrencoskun.tableview.handler;
 import android.util.Log;
 import android.util.SparseArray;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.evrencoskun.tableview.ITableView;
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by evrencoskun on 24.12.2017.
@@ -200,8 +200,7 @@ public class VisibilityHandler {
      * when we add or remove any item of RecyclerView, we need to view index.
      */
     private <T> int convertIndexToViewIndex(int index, SparseArray<T> list) {
-        int smallerHidden = getSmallerHiddenCount(index, list);
-        return index - smallerHidden;
+        return index - getSmallerHiddenCount(index, list);
     }
 
     static class Row {
