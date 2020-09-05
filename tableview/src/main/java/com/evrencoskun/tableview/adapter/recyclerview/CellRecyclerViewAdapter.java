@@ -281,9 +281,9 @@ public class CellRecyclerViewAdapter<C> extends AbstractRecyclerViewAdapter<C> {
         for (int i = 0; i < mItemList.size(); i++) {
             List<C> rowList = new ArrayList<>((List<C>) mItemList.get(i));
 
-            if (rowList.size() > column) {
+            //if (rowList.size() > column) {
                 rowList.add(column, cellColumnItems.get(i));
-            }
+            //}
 
             cellItems.add(rowList);
         }

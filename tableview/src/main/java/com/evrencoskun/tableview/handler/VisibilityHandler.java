@@ -102,7 +102,7 @@ public class VisibilityHandler {
 
         if (mHideColumnList.get(column) == null) {
             // add column the list
-            mHideColumnList.put(column, getColumnValueFromPosition(column));
+            mHideColumnList.put(column, getColumnValueFromPosition(viewColumn, column));
 
             // remove row model from adapter
             mTableView.getAdapter().removeColumn(viewColumn);
@@ -124,7 +124,7 @@ public class VisibilityHandler {
         for (int column : columns) {
             int viewColumn = convertIndexToViewIndex(column, mHideColumnList);
             if (mHideColumnList.get(column) == null) {
-                mHideColumnListTemp.put(column, getColumnValueFromPosition(viewColumn));
+                mHideColumnListTemp.put(column, getColumnValueFromPosition(viewColumn, column));
             }
         }
 
@@ -187,8 +187,8 @@ public class VisibilityHandler {
      */
     private <T> int getSmallerHiddenCount(int index, SparseArray<T> list) {
         int count = 0;
-        for (int i = 0; i < index && i < list.size(); i++) {
-            if (list.valueAt(i) != null) {
+        for (int i = 0; i < index; i++) {
+            if (list.get(i) != null) {
                 count++;
             }
         }
@@ -201,11 +201,6 @@ public class VisibilityHandler {
      */
     private <T> int convertIndexToViewIndex(int index, SparseArray<T> list) {
         int smallerHidden = getSmallerHiddenCount(index, list);
-
-        if (index <= smallerHidden) {
-            return index;
-        }
-
         return index - smallerHidden;
     }
 
@@ -278,12 +273,12 @@ public class VisibilityHandler {
     }
 
     @NonNull
-    private Column getColumnValueFromPosition(int column) {
+    private Column getColumnValueFromPosition(int column, int index) {
         AbstractTableAdapter adapter = mTableView.getAdapter();
-        Object columnHeaderModel = adapter.getColumnHeaderItem(column);
+        Object columnHeaderModel = adapter.getColumnHeaderItem(index);
         List<Object> cellModelList = adapter.getCellColumnItems(column);
 
-        return new Column(column, columnHeaderModel, cellModelList);
+        return new Column(index, columnHeaderModel, cellModelList);
     }
 
     @NonNull
