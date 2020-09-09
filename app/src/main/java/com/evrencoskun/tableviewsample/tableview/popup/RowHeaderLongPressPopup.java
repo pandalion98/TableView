@@ -76,34 +76,19 @@ public class RowHeaderLongPressPopup extends PopupMenu implements PopupMenu
 
         switch (menuItem.getItemId()) {
             case SCROLL_COLUMN:
-                mTableView.showAllHiddenColumns();
+                mTableView.scrollToColumnPosition(15);
                 break;
             case SHOWHIDE_COLUMN:
-                int[] columnsToHide = {2, 3, 4, 5, 6, 10, 11, 12, 13};
-                mTableView.hideMultipleColumns(columnsToHide);
-
-//                // 0
-//                // 1
-//                mTableView.hideColumn(2);
-//                mTableView.hideColumn(3);
-//                mTableView.hideColumn(4);
-//                mTableView.hideColumn(5);
-//                mTableView.hideColumn(6);
-//                // 7
-//                // 8
-//                // 9
-//                mTableView.hideColumn(10);
-//                mTableView.hideColumn(11);
-//                mTableView.hideColumn(12);
-//                mTableView.hideColumn(13);
-//                // 14
+                int column = 1;
+                if (mTableView.isColumnVisible(column)) {
+                    mTableView.hideColumn(column);
+                } else {
+                    mTableView.showColumn(column);
+                }
 
                 break;
             case REMOVE_ROW:
-                //mTableView.hideColumn(0);     // Possible edge case
-                mTableView.hideColumn(1);
-                //mTableView.hideColumn(9);
-                //mTableView.hideColumn(14);    // Edge case
+                mTableView.getAdapter().removeRow(mRowPosition);
                 break;
         }
         return true;
