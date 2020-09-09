@@ -252,8 +252,8 @@ public class CellRecyclerViewAdapter<C> extends AbstractRecyclerViewAdapter<C> {
             cellItems.add(rowList);
         }
 
-        // Change data without notifying. Because we already did for visible recyclerViews.
-        setItems((List<C>) cellItems, false);
+        // Set items and notify data set
+        setItems((List<C>) cellItems, true);
     }
 
     public void addColumnItems(int column, @NonNull List<C> cellColumnItems) {
